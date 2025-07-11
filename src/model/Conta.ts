@@ -1,18 +1,20 @@
-//Tô usando o # pra propriedades privadas
+// obs1: Tô usando o # pra propriedades privadas
+// obs2: Removi o atributo 'tipo' da classe Conta
+// porque o tipo da conta agora é definido diretamente
+// pelas classes filhas, através do método abstrato exibirTipoConta()
+// no final do código
 
-export class Conta {
+export abstract class Conta {
   #numero: number;
   #agencia: number;
-  #tipo: number;
   #titular: string;
   #saldo: number;
 
-  constructor(numero: number, agencia: number, tipo: number, titular: string, saldo: number) {
-    this.#numero = numero;
-    this.#agencia = agencia;
-    this.#tipo = tipo;
-    this.#titular = titular;
-    this.#saldo = saldo;
+  constructor(numero: number, agencia: number, titular: string, saldo: number) {
+  this.#numero = numero;
+  this.#agencia = agencia;
+  this.#titular = titular;
+  this.#saldo = saldo;
   }
 
   get numero(): number {
@@ -29,14 +31,6 @@ export class Conta {
 
   set agencia(agencia: number) {
     this.#agencia = agencia;
-  }
-
-  get tipo(): number {
-    return this.#tipo;
-  }
-
-  set tipo(tipo: number) {
-    this.#tipo = tipo;
   }
 
   get titular(): string {
@@ -83,16 +77,15 @@ export class Conta {
   }
 
   visualizar(): void {
-    const tipoConta = this.#tipo === 1 ? "Conta Corrente" :
-                      this.#tipo === 2 ? "Conta Poupança" : "Tipo Desconhecido";
-
     console.log("\n\n*****************************************************");
     console.log("Dados da Conta:");
     console.log("*****************************************************");
     console.log(`Número da Conta: ${this.#numero}`);
     console.log(`Agência: ${this.#agencia}`);
-    console.log(`Tipo da Conta: ${tipoConta}`);
     console.log(`Titular: ${this.#titular}`);
     console.log(`Saldo: R$ ${this.#saldo.toFixed(2)}`);
   }
+
+  abstract exibirTipoConta(): void;
+  
 }

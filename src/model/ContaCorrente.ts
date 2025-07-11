@@ -1,11 +1,16 @@
 import { Conta } from "./Conta";
 
 export class ContaCorrente extends Conta {
-
   private _limite: number;
 
-  constructor(numero: number, agencia: number, tipo: number, titular: string, saldo: number, limite: number) {
-    super(numero, agencia, tipo, titular, saldo);
+  constructor(
+    numero: number,
+    agencia: number,
+    titular: string,
+    saldo: number,
+    limite: number
+  ) {
+    super(numero, agencia, titular, saldo);
     this._limite = limite;
   }
 
@@ -18,7 +23,7 @@ export class ContaCorrente extends Conta {
   }
 
   public sacar(valor: number): boolean {
-    if ((this.saldo + this._limite) < valor) {
+    if (this.saldo + this._limite < valor) {
       console.log("\nSaldo Insuficiente!");
       return false;
     }
@@ -30,5 +35,9 @@ export class ContaCorrente extends Conta {
   public visualizar(): void {
     super.visualizar();
     console.log("Limite: " + this._limite.toFixed(2));
+  }
+
+  public exibirTipoConta(): void {
+    console.log("Conta Corrente");
   }
 }
