@@ -43,38 +43,42 @@ export class ContaController implements ContaRepository {
     let buscaConta = this.buscarNoArray(conta.numero);
 
     if (buscaConta != null) {
-        this.listaContas[this.listaContas.indexOf(buscaConta)] = conta;
+      this.listaContas[this.listaContas.indexOf(buscaConta)] = conta;
 
-    console.log(
-      Colors.fg.green,
-      `\nConta número ${conta.numero} atualizada com sucesso!`,
-      Colors.reset
-    );
+      console.log(
+        Colors.fg.green,
+        `\nConta número ${conta.numero} atualizada com sucesso!`,
+        Colors.reset
+      );
     } else {
-        console.log(
-            Colors.fg.red,
-            `\nConta número ${conta.numero} não foi encontrada!`,
-            Colors.reset
-    );
+      console.log(
+        Colors.fg.red,
+        `\nConta número ${conta.numero} não foi encontrada!`,
+        Colors.reset
+      );
+    }
   }
 
-  deletar(numero: number): void {
+  public deletar(numero: number): void {
     const contaEncontrada = this.buscarNoArray(numero);
 
     if (contaEncontrada != null) {
-        this.listaContas = this.listaContas.filter(conta => conta.numero !== numero);
-        console.log(
+      this.listaContas = this.listaContas.filter(
+        (conta) => conta.numero !== numero
+      );
+      console.log(
         Colors.fg.green,
         `\nConta número ${numero} deletada com sucesso!`,
         Colors.reset
-        );
+      );
     } else {
-        console.log(
+      console.log(
         Colors.fg.red,
         `\nConta número ${numero} não encontrada!`,
         Colors.reset
-        );
+      );
     }
+  }
 
   public sacar(numero: number, valor: number): void {
     const contaEncontrada = this.listaContas.find(
@@ -94,25 +98,30 @@ export class ContaController implements ContaRepository {
 
   public depositar(numero: number, valor: number): void {
     const contaEncontrada = this.listaContas.find(
-        (conta) => conta.numero === numero
+      (conta) => conta.numero === numero
     );
 
     if (contaEncontrada) {
-        contaEncontrada.depositar(valor);
-        console.log(
+      contaEncontrada.depositar(valor);
+      console.log(
         Colors.fg.green,
         `\nDepósito na Conta número: ${numero} foi efetuado com sucesso!`,
         Colors.reset
-        );
+      );
     } else {
-        console.log(
+      console.log(
         Colors.fg.red,
         `\nConta número ${numero} não encontrada!`,
         Colors.reset
-        );
+      );
     }
+  }
 
-  transferir(numeroOrigem: number, numeroDestino: number, valor: number): void {
+  public transferir(
+    numeroOrigem: number,
+    numeroDestino: number,
+    valor: number
+  ): void {
     const contaOrigem = this.listaContas.find(
       (conta) => conta.numero === numeroOrigem
     );
@@ -142,7 +151,9 @@ export class ContaController implements ContaRepository {
       contaDestino.depositar(valor);
       console.log(
         Colors.fg.green,
-        `\nTransferência de R$ ${valor.toFixed(2)} de ${contaOrigem.titular} para ${contaDestino.titular} realizada com sucesso!`,
+        `\nTransferência de R$ ${valor.toFixed(2)} de ${
+          contaOrigem.titular
+        } para ${contaDestino.titular} realizada com sucesso!`,
         Colors.reset
       );
     } else {
@@ -152,12 +163,17 @@ export class ContaController implements ContaRepository {
         Colors.reset
       );
     }
+  }
 
-    public buscarNoArray(numero: number): Conta | null {
-        for (let conta of this.listaContas) {
-            if (conta.numero === numero)
-                return conta;
+  public buscarNoArray(numero: number): Conta | null {
+    for (let conta of this.listaContas) {
+      if (conta.numero === numero) return conta;
     }
+
     return null;
+  }
+
+  public gerarNumero(): number {
+    return ++this.numero;
   }
 }
